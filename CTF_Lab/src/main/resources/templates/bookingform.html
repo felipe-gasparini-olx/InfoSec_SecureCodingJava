@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: ticketmagpie-head">
+</head>
+<body class="no-sidebar">
+<div id="page-wrapper">
+
+    <!-- Header -->
+    <div th:replace="fragments :: ticketmagpie-header">
+    </div>
+
+    <div class="wrapper">
+        <div class="container">
+            <p>Please enter your personal info to book this concert.</p>
+            <form action="/user/book/payment" method="POST">
+                <div class="row 50%">
+                    <div class="6u">
+                        <input name="firstname" placeholder="First Name" type="text"/>
+                    </div>
+                    <div class="6u">
+                        <input name="lastname" placeholder="Last Name" type="text"/>
+                    </div>
+                </div>
+                <div class="row 50%">
+                    <div class="12u">
+                        <input name="address1" placeholder="Address Line 1" type="text"/>
+                    </div>
+                </div>
+                <div class="row 50%">
+                    <div class="12u">
+                        <input name="address2" placeholder="Address Line 2" type="text"/>
+                    </div>
+                </div>
+                <div class="row 50%">
+                    <div class="12u">
+                        <input name="address3" placeholder="Address Line 3" type="text"/>
+                    </div>
+                </div>
+                <div class="row 50%">
+                    <div class="6u">
+                        <input name="postcode" placeholder="Postcode/ZIP" type="text"/>
+                    </div>
+                    <div class="6u">
+                        <select name="country">
+                            <option>United Kingdom</option>
+                            <option>France</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row 50%">
+                    <div class="6u">
+                    <select name="paymentmethod" placeholder="Payment Method" type="text">
+                        <option>Visa Credit</option>
+                        <option>Visa Debit</option>
+                        <option>Mastercard</option>
+                        <option>American Express</option>
+                        <option>Diners Club</option>
+                        <option>JCB</option>
+                        <option>Discover</option>
+                    </select>
+                    </div>
+                    <div class="12u">
+                        <input name="cardnumber" placeholder="Card Number" type="text">
+                    </div>
+                    <div class="12u">
+                        <input name="cvv2" placeholder="CVV2" type="text">
+                    </div>
+                    <div class="12u">
+                        <input name="expirydate" placeholder="Expiry Date MM/YY" type="text">
+                    </div>
+                </div>
+                <div class="row 50%">
+                    <div class="12u">
+                        <input type="hidden" name="concertid" th:value="${concertid}"/>
+                        <input type="submit"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div th:replace="fragments :: ticketmagpie-footer">
+    </div>
+
+</div>
+
+<!-- Scripts -->
+
+<span th:replace="fragments :: ticketmagpie-scripts"></span>
+
+</body>
+</html>

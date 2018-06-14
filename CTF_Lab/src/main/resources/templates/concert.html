@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: ticketmagpie-head">
+</head>
+<body class="homepage">
+<div id="page-wrapper">
+
+    <!-- Header -->
+    <div th:replace="fragments :: ticketmagpie-header (showHero=false)">
+    </div>
+
+    <!-- Features 1 -->
+    <div class="wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="image-wrapper first">
+                    <a href="#" class="image featured first"><img
+                            th:src="@{/concertimage(id=${concert.id})}"/></a>
+                </div>
+                <header>
+                    <h2 th:text="${concert.band}"></h2>
+                    <i th:text="${concert.date}"></i>
+                </header>
+                <p th:text="${concert.description}"></p>
+                <ul class="actions">
+                    <li><a th:href="@{/user/book(id=${concert.id})}" class="button">Book</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="row" th:if="${#authentication.name != 'anonymousUser'}">
+                <form action="/user/comment" method="post" style="width:100%">
+                    Add a comment:
+                    <input type="text" name="text" style="width:25em; display:inline;"/>
+                    <input type="hidden" name="user" th:value="${#authentication.name}"/>
+                    <input type="hidden" name="concertId" th:value="${concert.id}"/>
+                    <input type="submit" value="Send"/>
+                </form>
+            </div>
+            <div class="row" th:each="comment : ${comments}">
+                <p><i th:text="${comment.user}"></i></p>
+                <p th:utext="${comment.text}"></p>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="fragments :: ticketmagpie-footer">
+    </div>
+
+</div>
+
+<!-- Scripts -->
+
+<span th:replace="fragments :: ticketmagpie-scripts"></span>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments :: ticketmagpie-head">
+</head>
+<body class="no-sidebar">
+<div id="page-wrapper">
+
+    <!-- Header -->
+    <div th:replace="fragments :: ticketmagpie-header">
+    </div>
+
+    <div class="wrapper">
+        <div class="container">
+            <p>Hello <span sec:authentication="name"></span>!</p>
+            <p th:if="${#lists.isEmpty(tickets)}">
+                You have no tickets yet, why not <a href="/">book one of our concerts?</a>
+            </p>
+            <ul th:if="${not #lists.isEmpty(tickets)}">
+                Your tickets:
+                <li th:each="ticket : ${tickets}">
+                    <a th:href="@{/ticket(id=${ticket.id})}" th:text="${ticket.concert.band}"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div th:replace="fragments :: ticketmagpie-footer">
+    </div>
+
+</div>
+
+<!-- Scripts -->
+
+<span th:replace="fragments :: ticketmagpie-scripts"></span>
+
+</body>
+</html>

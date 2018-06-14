@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: ticketmagpie-head">
+</head>
+<body class="no-sidebar">
+<div id="page-wrapper">
+
+    <!-- Header -->
+    <div th:replace="fragments :: ticketmagpie-header">
+    </div>
+
+    <div class="wrapper">
+        <div class="container">
+            <h1>
+                Your ticket to <span th:text="${ticket.concert.band}"></span>
+                on <span th:text="${ticket.concert.date}"></span>
+            </h1>
+            <table border="1" style="max-width: 400px; margin: auto;">
+                <tr>
+                    <td>First name</td>
+                    <td th:text="${ticket.firstName}"></td>
+                </tr>
+                <tr>
+                    <td>Last name</td>
+                    <td th:text="${ticket.lastName}"></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <p th:text="${ticket.address1}"></p>
+                        <p th:text="${ticket.address2}"></p>
+                        <p th:text="${ticket.address3}"></p>
+                        <p>
+                            <span th:text="${ticket.postcode}"></span>
+                            <span th:text="${ticket.country}"></span>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+            <p><b>Enjoy the show!</b></p>
+        </div>
+    </div>
+
+    <div th:replace="fragments :: ticketmagpie-footer">
+    </div>
+
+</div>
+
+<!-- Scripts -->
+
+<span th:replace="fragments :: ticketmagpie-scripts"></span>
+
+</body>
+</html>
