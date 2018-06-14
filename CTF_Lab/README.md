@@ -1,5 +1,8 @@
 TicketMagpie
 ============
+(Original source from https://github.com/dhatanian/ticketmagpie)
+
+Shout out to Marcos for finding this!!!
 
 This project aims at demonstrating various security vulnerabilities such as the ones listed in the OWASP Top10.
 
