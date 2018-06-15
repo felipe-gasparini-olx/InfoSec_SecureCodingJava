@@ -1,29 +1,28 @@
 package com.ticketmagpie.infrastructure.security;
 
-import static java.lang.String.format;
-
+import com.ticketmagpie.User;
+import com.ticketmagpie.infrastructure.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ticketmagpie.User;
-import com.ticketmagpie.infrastructure.MailService;
+import static java.lang.String.format;
 
 @Component
 public class ForgotPasswordService {
-  @Autowired
-  private MailService mailService;
+    @Autowired
+    private MailService mailService;
 
-  public void userForgotPassword(User user) {
+    public void userForgotPassword(User user) {
 
-    // FIXME should send a token with expiration instead
+        // FIXME should send a token with expiration instead
 
 
-    mailService.sendEmail(
-        user.getEmail(),
-        "Your Ticketmagpie password",
-        format(
-            "Hello %s! Have you lost your password? Here it is: %s.",
-            user.getUsername(),
-            user.getPassword()));
-  }
+        mailService.sendEmail(
+                user.getEmail(),
+                "Your Ticketmagpie password",
+                format(
+                        "Hello %s! Have you lost your password? Here it is: %s.",
+                        user.getUsername(),
+                        user.getPassword()));
+    }
 }

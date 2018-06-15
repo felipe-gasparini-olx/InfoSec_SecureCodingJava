@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component;
 @Component
 @ConditionalOnProperty(name = "spring.datasource.platform", havingValue = "hsqldb")
 public class HSQLDBLastIdInserted implements LastIdInserted {
-  @Autowired
-  private JdbcTemplate jdbcTemplate;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
-  @Override
-  public int get() {
-    return jdbcTemplate.queryForObject("CALL IDENTITY();", (rs, rowNum) -> rs.getInt(1));
-  }
+    @Override
+    public int get() {
+        return jdbcTemplate.queryForObject("CALL IDENTITY();", (rs, rowNum) -> rs.getInt(1));
+    }
 }
