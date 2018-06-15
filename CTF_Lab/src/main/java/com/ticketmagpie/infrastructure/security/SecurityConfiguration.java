@@ -29,6 +29,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //Required if we ever want to include the app in an iframe
                 .authorizeRequests()
                 .antMatchers("/user/**").authenticated()
+                .antMatchers("/user/admin/**").hasAnyRole("ADMIN")
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
@@ -42,13 +43,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .rememberMeServices(ticketMagPieRememberMeService)
         ;
 
-          http
-              .headers()
-                  .xssProtection()
-                  .block(false)
-              .and()
-              .frameOptions()
-              .sameOrigin();
+        http
+                .headers()
+                .xssProtection()
+                .block(false)
+                .and()
+                .frameOptions()
+                .sameOrigin();
     }
 
     @Override

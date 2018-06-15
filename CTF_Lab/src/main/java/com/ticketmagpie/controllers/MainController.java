@@ -54,12 +54,12 @@ public class MainController {
         return "login";
     }
 
-    @RequestMapping(value = "/registration", method = RequestMethod.GET)
+    @RequestMapping(value = "/registration", method = {RequestMethod.POST, RequestMethod.GET})
     public String registration(@RequestParam(required = false, name = "username") String username, @RequestParam(required = false, name = "password") String password, @RequestParam(required = false, name = "email") String email) {
-        password = passwordEncoder.encode(password);
         if (username == null) {
             return "registration";
         } else {
+            password = passwordEncoder.encode(password);
             userRepository.save(new User(username, password, email, "USER"));
             return "login";
         }
