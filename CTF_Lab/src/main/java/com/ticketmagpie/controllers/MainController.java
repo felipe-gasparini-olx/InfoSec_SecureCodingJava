@@ -95,15 +95,8 @@ public class MainController {
         }
     }
 
-    @RequestMapping(value = "/redirect", method = {RequestMethod.POST, RequestMethod.GET})
-    public void redirect(@RequestParam String url, HttpServletResponse httpServletResponse)
-            throws IOException {
-        httpServletResponse.sendRedirect(url);
-    }
-
     @RequestMapping(value = "/concert", method = RequestMethod.GET)
-    public String concert(@RequestParam Integer id, Model model)
-            throws IOException {
+    public String concert(@RequestParam Integer id, Model model) {
         model.addAttribute("concert", concertRepository.get(id));
         model.addAttribute("comments", commentRepository.getAllForConcert(id));
         return "concert";
