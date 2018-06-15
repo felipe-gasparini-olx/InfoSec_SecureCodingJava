@@ -51,9 +51,10 @@ public class TicketMagPieRememberMeService implements RememberMeServices, Logout
     }
 
     private Cookie cookieForUser(UsernamePasswordAuthenticationToken authentication) {
-        Cookie cookie =
-                new Cookie(COOKIE_NAME, encrypt(authentication));
+        Cookie cookie = new Cookie(COOKIE_NAME, encrypt(authentication));
         cookie.setMaxAge(ONE_DAY_IN_SECONDS);
+        cookie.setSecure(true);
+        cookie.setHttpOnly(true);
         return cookie;
     }
 
@@ -65,6 +66,8 @@ public class TicketMagPieRememberMeService implements RememberMeServices, Logout
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         Cookie cookie = new Cookie(COOKIE_NAME, "");
         cookie.setMaxAge(0);
+        cookie.setSecure(true);
+        cookie.setHttpOnly(true);
         response.addCookie(cookie);
     }
 }
