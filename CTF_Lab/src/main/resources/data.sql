@@ -7,6 +7,5 @@ INSERT INTO concerts (band, concert_date, description, image_url) VALUES ('The P
                                                                           'Re-discover The Players on their second tour at the City Concert Hall. Includes extraordinary new compositions and jazz classics.',
                                                                           'jazz-band.jpg');
 
-INSERT INTO users (username, email, password, role) VALUES ('john', 'ticketmagpie.john@yopmail.com', 'jpass', 'USER');
-INSERT INTO users (username, email, password, role) VALUES ('mark', 'ticketmagpie.mark@yopmail.com', 'mpass', 'ADMIN');
-INSERT INTO users (username, email, password, role) VALUES ('danbilling', 'ticketmagpie.danbilling@yopmail.com', 't4rd1s1963', 'USER');
+INSERT INTO users (username, email, password, role) VALUES ('admin', 'admin_ticket@mailinator.com', '$2a$10$zpnfXD7Av9YUhG3obNrtI.QHTDXEhqes.PHlavIsoiUjnswGgrxwS', 'ADMIN');
+

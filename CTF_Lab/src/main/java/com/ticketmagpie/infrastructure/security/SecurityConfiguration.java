@@ -7,50 +7,58 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-  @Autowired
-  private TicketMagPieAuthenticationProvider ticketMagPieAuthenticationProvider;
+    @Autowired
+    private TicketMagPieAuthenticationProvider ticketMagPieAuthenticationProvider;
 
-  @Autowired
-  private TicketMagPieRememberMeService ticketMagPieRememberMeService;
+    @Autowired
+    private TicketMagPieRememberMeService ticketMagPieRememberMeService;
 
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    http
-        //Necessary for HTML forms to work
-        .csrf().disable()
-        //Required if we ever want to include the app in an iframe
-        .headers().disable()
-        .authorizeRequests()
-        .antMatchers("/user/**").authenticated()
-        .anyRequest().permitAll()
-        .and()
-        .formLogin()
-        .loginPage("/login")
-        .permitAll()
-        .and()
-        .logout()
-        .permitAll()
-        .and()
-        .rememberMe()
-        .rememberMeServices(ticketMagPieRememberMeService)
-    ;
-  }
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                //Necessary for HTML forms to work
+                .csrf().disable()
+                //Required if we ever want to include the app in an iframe
+                .headers().disable()
+                .authorizeRequests()
+                .antMatchers("/user/**").authenticated()
+                .anyRequest().permitAll()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .and()
+                .logout()
+                .permitAll()
+                .and()
+                .rememberMe()
+                .rememberMeServices(ticketMagPieRememberMeService)
+        ;
+    }
 
-  @Override
-  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth
-        .authenticationProvider(ticketMagPieAuthenticationProvider)
-        .eraseCredentials(false);
-  }
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .authenticationProvider(ticketMagPieAuthenticationProvider)
+                .eraseCredentials(false);
+    }
 
-  @Bean
-  public SpringSecurityDialect securityDialect() {
-    return new SpringSecurityDialect();
-  }
+    @Bean
+    public SpringSecurityDialect securityDialect() {
+        return new SpringSecurityDialect();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }

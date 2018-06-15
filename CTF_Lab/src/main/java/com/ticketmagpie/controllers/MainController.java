@@ -2,6 +2,7 @@ package com.ticketmagpie.controllers;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -72,8 +73,8 @@ public class MainController {
   public String forgotPassword(@RequestParam(required = false) String user, Model model) {
     boolean done = false;
     if (user != null) {
-      User userFromDatabase = userRepository.get(user);
-      forgotPasswordService.userForgotPassword(userFromDatabase);
+      Optional<User> userFromDatabase = userRepository.get(user);
+        userFromDatabase.ifPresent(it -> forgotPasswordService.userForgotPassword(it));
       done = true;
     }
     model.addAttribute("done", done);

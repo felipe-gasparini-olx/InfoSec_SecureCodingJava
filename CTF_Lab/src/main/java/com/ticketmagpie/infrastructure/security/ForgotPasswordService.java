@@ -14,6 +14,10 @@ public class ForgotPasswordService {
   private MailService mailService;
 
   public void userForgotPassword(User user) {
+
+    // FIXME should send a token with expiration instead
+
+
     mailService.sendEmail(
         user.getEmail(),
         "Your Ticketmagpie password",

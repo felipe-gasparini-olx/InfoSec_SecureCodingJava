@@ -1,34 +1,27 @@
 package com.ticketmagpie.infrastructure.persistence;
 
-import static java.lang.String.format;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
-
+import com.ticketmagpie.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import com.ticketmagpie.User;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Optional;
 
 @Component
 public class UserRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public User get(String username) {
+    public Optional<User> get(String username) {
         try {
-            return jdbcTemplate.queryForObject("SELECT * FROM users WHERE username=?", (rs, rowNum) -> toUser(rs), username);
+            return Optional.of(jdbcTemplate.queryForObject("SELECT * FROM users WHERE username=?", (rs, rowNum) -> toUser(rs), username));
         } catch (EmptyResultDataAccessException e) {
-            return null;
+            return Optional.empty();
         }
-    }
-
-    public User checkUsernameAndPassword(String username, String password) {
-        String query = "SELECT * FROM users WHERE username=? AND password=?";
-        return jdbcTemplate.queryForObject(query, (rs, rowNum) -> toUser(rs), username, password);
     }
 
     public List<User> getAllUsers() {

@@ -6,6 +6,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,9 @@ public class AdminController {
   @Autowired
   private ConcertRepository concertRepository;
 
+  @Autowired
+  private PasswordEncoder passwordEncoder;
+
   @RequestMapping("")
   public String home() {
     return "admin/home";
@@ -39,11 +43,11 @@ public class AdminController {
 
   @RequestMapping(value = "/users", method = POST)
   public String createUser(@RequestParam("username") String username,
-      @RequestParam(required = false, name = "email") String email,
+      @RequestParam(name = "email") String email,
       @RequestParam("role") String role,
       @RequestParam("password") String password,
       Model model) {
-    userRepository.save(new User(username, password, email, role));
+    userRepository.save(new User(username, passwordEncoder.encode(password), email, role));
     return listUsers(model);
   }
 
