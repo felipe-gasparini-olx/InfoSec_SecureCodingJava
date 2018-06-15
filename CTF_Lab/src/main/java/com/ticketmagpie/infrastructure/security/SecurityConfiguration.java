@@ -28,8 +28,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 //Required if we ever want to include the app in an iframe
                 .authorizeRequests()
+                .antMatchers("/user/admin/**").hasRole("ADMIN")
                 .antMatchers("/user/**").authenticated()
-                .antMatchers("/user/admin/**").hasAnyRole("ADMIN")
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
