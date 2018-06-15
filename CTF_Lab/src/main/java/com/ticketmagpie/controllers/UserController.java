@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.HtmlUtils;
 
@@ -31,19 +32,19 @@ public class UserController {
     @Autowired
     private MainController mainController;
 
-    @RequestMapping("/home")
+    @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String userHome(Model model, Authentication authentication) {
         model.addAttribute("tickets", ticketRepository.getTicketsForUser(authentication.getName()));
         return "user";
     }
 
-    @RequestMapping("/book")
+    @RequestMapping(value = "/book", method = RequestMethod.GET)
     public String userBook(@RequestParam String id, Model model) {
         model.addAttribute("concertid", id);
         return "bookingform";
     }
 
-    @RequestMapping("/book/payment")
+    @RequestMapping(value = "/book/payment", method = RequestMethod.POST)
     public String userPayment
             (@RequestParam("firstname") String firstName,
              @RequestParam("lastname") String lastName,
@@ -54,7 +55,7 @@ public class UserController {
              @RequestParam("country") String country,
              @RequestParam("paymentmethod") String paymentmethod,
              @RequestParam("cardnumber") String cardnumber,
-             @RequestParam("ccv2") String ccv2,
+             @RequestParam("cvv2") String ccv2,
              @RequestParam("expirydate") String expirydate,
              @RequestParam("concertid") Integer concertId,
              Authentication currentUser) {
@@ -64,7 +65,7 @@ public class UserController {
         return "redirect:/ticket?id=" + savedTicketId;
     }
 
-    @RequestMapping("/comment")
+    @RequestMapping(value = "/comment", method = RequestMethod.POST)
     public String comment(@RequestParam("concertId") Integer concertId, @RequestParam("user") String user, @RequestParam("text") String text, Model model)
             throws IOException {
         Comment newComment = new Comment(concertId, user, text);

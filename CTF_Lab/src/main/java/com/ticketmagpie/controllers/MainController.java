@@ -1,5 +1,18 @@
 package com.ticketmagpie.controllers;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.ticketmagpie.Concert;
 import com.ticketmagpie.Ticket;
 import com.ticketmagpie.User;
@@ -38,18 +51,18 @@ public class MainController {
     @Autowired
     private ForgotPasswordService forgotPasswordService;
 
-    @RequestMapping("/")
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(Model model) {
         model.addAttribute("concerts", concertRepository.getAllConcerts());
         return "index";
     }
 
-    @RequestMapping("/login")
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
         return "login";
     }
 
-    @RequestMapping("/registration")
+    @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(@RequestParam(required = false, name = "username") String username, @RequestParam(required = false, name = "password") String password, @RequestParam(required = false, name = "email") String email, @RequestParam(required = false, name = "role", defaultValue = "USER") String role) {
         if (username == null) {
             return "registration";
@@ -60,14 +73,14 @@ public class MainController {
 
     }
 
-    @RequestMapping("/ticket")
+    @RequestMapping(value = "/ticket", method = RequestMethod.GET)
     public String ticket(@RequestParam Integer id, Model model) {
         Ticket ticket = ticketRepository.get(id);
         model.addAttribute("ticket", ticket);
         return "ticket";
     }
 
-    @RequestMapping("/forgotpassword")
+    @RequestMapping(value = "/forgotpassword", method = {RequestMethod.POST, RequestMethod.GET})
     public String forgotPassword(@RequestParam(required = false) String user, Model model) {
         boolean done = false;
         if (user != null) {
@@ -79,7 +92,7 @@ public class MainController {
         return "forgotpassword";
     }
 
-    @RequestMapping("/concertimage")
+    @RequestMapping(value = "/concertimage", method = RequestMethod.GET)
     public void concertImage(@RequestParam(required = true) Integer id, HttpServletResponse httpServletResponse)
             throws IOException {
         Concert concert = concertRepository.get(id);
@@ -90,13 +103,13 @@ public class MainController {
         }
     }
 
-    @RequestMapping("/redirect")
+    @RequestMapping(value = "/redirect", method = {RequestMethod.POST, RequestMethod.GET})
     public void redirect(@RequestParam String url, HttpServletResponse httpServletResponse)
             throws IOException {
         httpServletResponse.sendRedirect(url);
     }
 
-    @RequestMapping("/concert")
+    @RequestMapping(value = "/concert", method = RequestMethod.GET)
     public String concert(@RequestParam Integer id, Model model)
             throws IOException {
         model.addAttribute("concert", concertRepository.get(id));
