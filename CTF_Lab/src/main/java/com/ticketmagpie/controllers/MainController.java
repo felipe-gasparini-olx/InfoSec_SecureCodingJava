@@ -1,18 +1,5 @@
 package com.ticketmagpie.controllers;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import com.ticketmagpie.Concert;
 import com.ticketmagpie.Ticket;
 import com.ticketmagpie.User;
@@ -23,9 +10,11 @@ import com.ticketmagpie.infrastructure.persistence.UserRepository;
 import com.ticketmagpie.infrastructure.security.ForgotPasswordService;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
@@ -51,6 +40,9 @@ public class MainController {
     @Autowired
     private ForgotPasswordService forgotPasswordService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(Model model) {
         model.addAttribute("concerts", concertRepository.getAllConcerts());
@@ -63,14 +55,14 @@ public class MainController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public String registration(@RequestParam(required = false, name = "username") String username, @RequestParam(required = false, name = "password") String password, @RequestParam(required = false, name = "email") String email, @RequestParam(required = false, name = "role", defaultValue = "USER") String role) {
+    public String registration(@RequestParam(required = false, name = "username") String username, @RequestParam(required = false, name = "password") String password, @RequestParam(required = false, name = "email") String email) {
+        password = passwordEncoder.encode(password);
         if (username == null) {
             return "registration";
         } else {
-            userRepository.save(new User(username, password, email, role));
+            userRepository.save(new User(username, password, email, "USER"));
             return "login";
         }
-
     }
 
     @RequestMapping(value = "/ticket", method = RequestMethod.GET)
