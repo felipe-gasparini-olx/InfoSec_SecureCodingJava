@@ -7,6 +7,7 @@ import com.ticketmagpie.infrastructure.persistence.ConcertRepository;
 import com.ticketmagpie.infrastructure.persistence.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -66,9 +67,15 @@ public class UserController {
     }
 
     @RequestMapping(value = "/comment", method = RequestMethod.POST)
-    public String comment(@RequestParam("concertId") Integer concertId, @RequestParam("user") String user, @RequestParam("text") String text, Model model)
+    public String comment(@RequestParam("concertId") Integer concertId,
+                          @RequestParam("text") String text,
+                          Authentication authentication,
+                          Model model)
             throws IOException {
-        Comment newComment = new Comment(concertId, user, text);
+
+        String username = authentication.getName();
+
+        Comment newComment = new Comment(concertId, username, text);
         commentRepository.save(newComment);
         return mainController.concert(concertId, model);
     }
