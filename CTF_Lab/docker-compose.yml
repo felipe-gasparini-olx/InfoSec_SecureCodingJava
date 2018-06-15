@@ -8,6 +8,16 @@ services:
     environment:
       - MYSQL_DATABASE=ticketmagpie
       - MYSQL_ROOT_PASSWORD=root!@#
+  app:
+    image: "maven:3.5.3-jdk-8-alpine"
+    volumes:
+      - .:/app
+      - ~/.m2:/root/.m2
+    ports:
+          - "9999:9999"
+    depends_on:
+      - db
+    command: sh -c "cd /app && mvn -Dspring.datasource.url=jdbc:mysql://db:3306/ticketmagpie spring-boot:run "
 
 
 
