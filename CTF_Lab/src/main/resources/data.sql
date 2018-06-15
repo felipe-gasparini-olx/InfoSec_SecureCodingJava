@@ -12,3 +12,5 @@ INSERT INTO users (username, email, password, role) VALUES ('admin', 'admin_tick
 
 INSERT INTO users (username, email, password, role) VALUES ('mark', 'mark@mailinator.com', '$2a$10$QxtktyF086GMuYLYIraGgOGOI.EZtPLI.eG75D7EiZjcn2u.GUWnu', 'ADMIN');
 
+INSERT INTO users (username, email, password, role) VALUES ('user1', 'user1@mailinator.com', '$2a$10$fG1O1/pM5lBaCHvgMd9g.uF2iOET4s8WievtIZQyRhC1V0YEEV6H6', 'USER');
+INSERT INTO users (username, email, password, role) VALUES ('user2', 'user2@mailinator.com', '$2a$10$O4WGQnp2yJBbKBPcvCbB.ulyYQ55nmbUaBN0N75ipEKUt4u2Tek4O', 'USER');

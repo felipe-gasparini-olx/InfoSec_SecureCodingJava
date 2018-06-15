@@ -16,13 +16,16 @@ public class ForgotPasswordService {
 
         // FIXME should send a token with expiration instead
 
+        try {
+            mailService.sendEmail(
+                    user.getEmail(),
+                    "Your Ticketmagpie password",
+                    format(
+                            "Hello %s! Have you lost your password? Here it is: %s.",
+                            user.getUsername(),
+                            user.getPassword()));
+        } catch (Exception ignored) {
 
-        mailService.sendEmail(
-                user.getEmail(),
-                "Your Ticketmagpie password",
-                format(
-                        "Hello %s! Have you lost your password? Here it is: %s.",
-                        user.getUsername(),
-                        user.getPassword()));
+        }
     }
 }
